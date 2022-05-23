@@ -1,0 +1,164 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model autor {
+  ID_Autor      Int             @id @unique(map: "I3") @default(autoincrement()) @map("ID Autor")
+  Imiona        String          @db.VarChar(45)
+  Nazwisko      String          @db.VarChar(45)
+  Identyfikator String          @unique(map: "I5") @db.VarChar(45)
+  Data_narodzin DateTime?       @map("Data narodzin") @db.Date
+  Data_smierci  DateTime?       @map("Data smierci") @db.Date
+  ksiazka_autor ksiazka_autor[]
+
+  @@index([Imiona, Nazwisko], map: "I4")
+}
+
+model egzemplarz {
+  ID_Egzemplarz        Int                    @id @unique(map: "I11") @default(autoincrement()) @map("ID Egzemplarz")
+  Data_wydania         DateTime               @map("Data wydania") @db.Date
+  Cena_sugerowana      Decimal                @map("Cena sugerowana") @db.Decimal(19, 2)
+  Stan__ocena_         String                 @map("Stan (ocena)") @db.VarChar(15)
+  Stan__opis_          String?                @map("Stan (opis)") @db.Text
+  ISBN                 String?                @unique(map: "I14") @db.VarChar(15)
+  ID_Ksiazka           Int
+  ksiazka              ksiazka                @relation(fields: [ID_Ksiazka], references: [ID_Ksiazka], onUpdate: Restrict, map: "FK_45")
+  egzemplarz_sklad     egzemplarz_sklad[]
+  transakcja_sprzedazy transakcja_sprzedazy[]
+  transakcja_zakupu    transakcja_zakupu[]
+
+  @@index([ID_Ksiazka], map: "FK_47")
+  @@index([Data_wydania], map: "I12")
+  @@index([Stan__ocena_], map: "I13")
+}
+
+model egzemplarz_sklad {
+  ID_Relacja    Int        @id @default(autoincrement()) @map("ID Relacja")
+  ID_Egzemplarz Int        @map("ID Egzemplarz")
+  ID_Sklad      Int        @map("ID Sklad")
+  egzemplarz    egzemplarz @relation(fields: [ID_Egzemplarz], references: [ID_Egzemplarz], onUpdate: Restrict, map: "FK_140")
+  sklad         sklad      @relation(fields: [ID_Sklad], references: [ID_sklad], onUpdate: Restrict, map: "FK_143")
+
+  @@index([ID_Egzemplarz], map: "FK_142")
+  @@index([ID_Sklad], map: "FK_145")
+  @@map("egzemplarz sklad")
+}
+
+model gatunek_literacki {
+  ID_Gatunek      Int               @id @unique(map: "I9") @default(autoincrement()) @map("ID Gatunek")
+  Nazwa           String            @unique(map: "I10") @db.VarChar(45)
+  ksiazka_gatunek ksiazka_gatunek[]
+
+  @@map("gatunek literacki")
+}
+
+model kasjer {
+  ID_Kasjer            Int                    @id @unique(map: "I15") @default(autoincrement()) @map("ID Kasjer")
+  Imiona               String                 @db.VarChar(45)
+  Nazwisko             String                 @db.VarChar(45)
+  transakcja_sprzedazy transakcja_sprzedazy[]
+  transakcja_zakupu    transakcja_zakupu[]
+
+  @@index([Imiona, Nazwisko], map: "I16")
+}
+
+model ksiazka {
+  ID_Ksiazka          Int                   @id @unique(map: "I1") @default(autoincrement())
+  Tytul               String                @db.VarChar(60)
+  Data_premiery       DateTime?             @map("Data premiery") @db.Date
+  egzemplarz          egzemplarz[]
+  ksiazka_autor       ksiazka_autor[]
+  ksiazka_gatunek     ksiazka_gatunek[]
+  ksiazka_wydawnictwo ksiazka_wydawnictwo[]
+
+  @@index([Tytul], map: "I2")
+}
+
+model ksiazka_autor {
+  ID_Relacja Int     @id @default(autoincrement()) @map("ID Relacja")
+  ID_Ksiazka Int
+  ID_Autor   Int     @map("ID Autor")
+  autor      autor   @relation(fields: [ID_Autor], references: [ID_Autor], onUpdate: Restrict, map: "FK_76")
+  ksiazka    ksiazka @relation(fields: [ID_Ksiazka], references: [ID_Ksiazka], onUpdate: Restrict, map: "FK_73")
+
+  @@index([ID_Ksiazka], map: "FK_75")
+  @@index([ID_Autor], map: "FK_78")
+  @@map("ksiazka autor")
+}
+
+model ksiazka_gatunek {
+  ID_Relacja        Int               @id @default(autoincrement()) @map("ID Relacja")
+  ID_Ksiazka        Int
+  ID_Gatunek        Int               @map("ID Gatunek")
+  gatunek_literacki gatunek_literacki @relation(fields: [ID_Gatunek], references: [ID_Gatunek], onUpdate: Restrict, map: "FK_126")
+  ksiazka           ksiazka           @relation(fields: [ID_Ksiazka], references: [ID_Ksiazka], onUpdate: Restrict, map: "FK_123")
+
+  @@index([ID_Ksiazka], map: "FK_125")
+  @@index([ID_Gatunek], map: "FK_128")
+  @@map("ksiazka gatunek")
+}
+
+model ksiazka_wydawnictwo {
+  ID_Relacja     Int         @id @default(autoincrement()) @map("ID Relacja")
+  ID_Ksiazka     Int
+  ID_Wydawnictwo Int         @map("ID Wydawnictwo")
+  wydawnictwo    wydawnictwo @relation(fields: [ID_Wydawnictwo], references: [ID_Wydawnictwo], onUpdate: Restrict, map: "FK_103")
+  ksiazka        ksiazka     @relation(fields: [ID_Ksiazka], references: [ID_Ksiazka], onUpdate: Restrict, map: "FK_100")
+
+  @@index([ID_Ksiazka], map: "FK_102")
+  @@index([ID_Wydawnictwo], map: "FK_105")
+  @@map("ksiazka wydawnictwo")
+}
+
+model sklad {
+  ID_sklad         Int                @id @unique(map: "I21") @default(autoincrement()) @map("ID sklad")
+  Nazwa            String             @unique(map: "I22") @db.VarChar(45)
+  Powierzchnia     Float              @db.Float
+  egzemplarz_sklad egzemplarz_sklad[]
+}
+
+model transakcja_sprzedazy {
+  ID_Transakcja_sprzedazy Int        @id @unique(map: "I17") @default(autoincrement()) @map("ID Transakcja sprzedazy")
+  Cena                    Decimal    @db.Decimal(19, 2)
+  Data_transakcji         DateTime   @map("Data transakcji") @db.Date
+  ID_Egzemplarz           Int        @map("ID Egzemplarz")
+  ID_Kasjer               Int        @map("ID Kasjer")
+  egzemplarz              egzemplarz @relation(fields: [ID_Egzemplarz], references: [ID_Egzemplarz], onUpdate: Restrict, map: "FK_192")
+  kasjer                  kasjer     @relation(fields: [ID_Kasjer], references: [ID_Kasjer], onUpdate: Restrict, map: "FK_186")
+
+  @@index([ID_Kasjer], map: "FK_188")
+  @@index([ID_Egzemplarz], map: "FK_194")
+  @@index([Data_transakcji], map: "I18")
+  @@map("transakcja sprzedazy")
+}
+
+model transakcja_zakupu {
+  ID_Transakcja_zakupu Int        @id @unique(map: "I19") @default(autoincrement()) @map("ID Transakcja zakupu")
+  Cena                 Decimal    @db.Decimal(19, 2)
+  Data_transakcji      DateTime   @map("Data transakcji") @db.Date
+  ID_Egzemplarz        Int        @map("ID Egzemplarz")
+  ID_Kasjer            Int        @map("ID Kasjer")
+  egzemplarz           egzemplarz @relation(fields: [ID_Egzemplarz], references: [ID_Egzemplarz], onUpdate: Restrict, map: "FK_189")
+  kasjer               kasjer     @relation(fields: [ID_Kasjer], references: [ID_Kasjer], onUpdate: Restrict, map: "FK_183")
+
+  @@index([ID_Kasjer], map: "FK_185")
+  @@index([ID_Egzemplarz], map: "FK_191")
+  @@index([Data_transakcji], map: "I20")
+  @@map("transakcja zakupu")
+}
+
+model wydawnictwo {
+  ID_Wydawnictwo      Int                   @id @unique(map: "I6") @default(autoincrement()) @map("ID Wydawnictwo")
+  Nazwa               String                @db.VarChar(45)
+  Identyfikator       String                @unique(map: "I8") @db.VarChar(45)
+  Data_powstania      DateTime?             @map("Data powstania") @db.Date
+  Data_zamkniecia     DateTime?             @map("Data zamkniecia") @db.Date
+  ksiazka_wydawnictwo ksiazka_wydawnictwo[]
+
+  @@index([Nazwa], map: "I7")
+}
