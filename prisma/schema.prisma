@@ -15,7 +15,6 @@ model autor {
   Data_narodzin DateTime?       @map("Data narodzin") @db.Date
   Data_smierci  DateTime?       @map("Data smierci") @db.Date
   ksiazka_autor ksiazka_autor[]
-
   @@index([Imiona, Nazwisko], map: "I4")
 }
 
@@ -31,7 +30,6 @@ model egzemplarz {
   egzemplarz_sklad     egzemplarz_sklad[]
   transakcja_sprzedazy transakcja_sprzedazy[]
   transakcja_zakupu    transakcja_zakupu[]
-
   @@index([ID_Ksiazka], map: "FK_47")
   @@index([Data_wydania], map: "I12")
   @@index([Stan__ocena_], map: "I13")
@@ -43,7 +41,6 @@ model egzemplarz_sklad {
   ID_Sklad      Int        @map("ID Sklad")
   egzemplarz    egzemplarz @relation(fields: [ID_Egzemplarz], references: [ID_Egzemplarz], onUpdate: Restrict, map: "FK_140")
   sklad         sklad      @relation(fields: [ID_Sklad], references: [ID_sklad], onUpdate: Restrict, map: "FK_143")
-
   @@index([ID_Egzemplarz], map: "FK_142")
   @@index([ID_Sklad], map: "FK_145")
   @@map("egzemplarz sklad")
@@ -53,7 +50,6 @@ model gatunek_literacki {
   ID_Gatunek      Int               @id @unique(map: "I9") @default(autoincrement()) @map("ID Gatunek")
   Nazwa           String            @unique(map: "I10") @db.VarChar(45)
   ksiazka_gatunek ksiazka_gatunek[]
-
   @@map("gatunek literacki")
 }
 
@@ -63,7 +59,6 @@ model kasjer {
   Nazwisko             String                 @db.VarChar(45)
   transakcja_sprzedazy transakcja_sprzedazy[]
   transakcja_zakupu    transakcja_zakupu[]
-
   @@index([Imiona, Nazwisko], map: "I16")
 }
 
@@ -75,7 +70,6 @@ model ksiazka {
   ksiazka_autor       ksiazka_autor[]
   ksiazka_gatunek     ksiazka_gatunek[]
   ksiazka_wydawnictwo ksiazka_wydawnictwo[]
-
   @@index([Tytul], map: "I2")
 }
 
@@ -85,7 +79,6 @@ model ksiazka_autor {
   ID_Autor   Int     @map("ID Autor")
   autor      autor   @relation(fields: [ID_Autor], references: [ID_Autor], onUpdate: Restrict, map: "FK_76")
   ksiazka    ksiazka @relation(fields: [ID_Ksiazka], references: [ID_Ksiazka], onUpdate: Restrict, map: "FK_73")
-
   @@index([ID_Ksiazka], map: "FK_75")
   @@index([ID_Autor], map: "FK_78")
   @@map("ksiazka autor")
@@ -97,7 +90,6 @@ model ksiazka_gatunek {
   ID_Gatunek        Int               @map("ID Gatunek")
   gatunek_literacki gatunek_literacki @relation(fields: [ID_Gatunek], references: [ID_Gatunek], onUpdate: Restrict, map: "FK_126")
   ksiazka           ksiazka           @relation(fields: [ID_Ksiazka], references: [ID_Ksiazka], onUpdate: Restrict, map: "FK_123")
-
   @@index([ID_Ksiazka], map: "FK_125")
   @@index([ID_Gatunek], map: "FK_128")
   @@map("ksiazka gatunek")
@@ -109,7 +101,6 @@ model ksiazka_wydawnictwo {
   ID_Wydawnictwo Int         @map("ID Wydawnictwo")
   wydawnictwo    wydawnictwo @relation(fields: [ID_Wydawnictwo], references: [ID_Wydawnictwo], onUpdate: Restrict, map: "FK_103")
   ksiazka        ksiazka     @relation(fields: [ID_Ksiazka], references: [ID_Ksiazka], onUpdate: Restrict, map: "FK_100")
-
   @@index([ID_Ksiazka], map: "FK_102")
   @@index([ID_Wydawnictwo], map: "FK_105")
   @@map("ksiazka wydawnictwo")
@@ -130,7 +121,6 @@ model transakcja_sprzedazy {
   ID_Kasjer               Int        @map("ID Kasjer")
   egzemplarz              egzemplarz @relation(fields: [ID_Egzemplarz], references: [ID_Egzemplarz], onUpdate: Restrict, map: "FK_192")
   kasjer                  kasjer     @relation(fields: [ID_Kasjer], references: [ID_Kasjer], onUpdate: Restrict, map: "FK_186")
-
   @@index([ID_Kasjer], map: "FK_188")
   @@index([ID_Egzemplarz], map: "FK_194")
   @@index([Data_transakcji], map: "I18")
@@ -145,7 +135,6 @@ model transakcja_zakupu {
   ID_Kasjer            Int        @map("ID Kasjer")
   egzemplarz           egzemplarz @relation(fields: [ID_Egzemplarz], references: [ID_Egzemplarz], onUpdate: Restrict, map: "FK_189")
   kasjer               kasjer     @relation(fields: [ID_Kasjer], references: [ID_Kasjer], onUpdate: Restrict, map: "FK_183")
-
   @@index([ID_Kasjer], map: "FK_185")
   @@index([ID_Egzemplarz], map: "FK_191")
   @@index([Data_transakcji], map: "I20")
@@ -159,6 +148,5 @@ model wydawnictwo {
   Data_powstania      DateTime?             @map("Data powstania") @db.Date
   Data_zamkniecia     DateTime?             @map("Data zamkniecia") @db.Date
   ksiazka_wydawnictwo ksiazka_wydawnictwo[]
-
   @@index([Nazwa], map: "I7")
 }

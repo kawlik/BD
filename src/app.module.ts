@@ -6,6 +6,7 @@ import { KsiazkaModule } from './ksiazka/ksiazka.module';
 import { GatunekLiterackiModule } from './gatunek_literacki/gatunek_literacki.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { EgzemplarzModule } from './egzemplarz/egzemplarz.module';
 
 @Module({
     imports: [
@@ -21,6 +22,8 @@ import { join } from 'path';
         ServeStaticModule.forRoot({
             rootPath: join(__dirname, '..', 'public'),
         }),
+
+        EgzemplarzModule,
     ],
     controllers: [],
     providers: [],
