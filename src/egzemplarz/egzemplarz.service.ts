@@ -10,7 +10,11 @@ export class EgzemplarzService {
 
 
     async findAll() {
-        return this.prismaService.egzemplarz.findMany();
+        return this.prismaService.egzemplarz.findMany({
+            where: {
+                transakcja_sprzedazy: { none: {} }
+            }
+        });
     }
 
     async findOne(id: string) {
