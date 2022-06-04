@@ -7,6 +7,7 @@ import { GatunekLiterackiModule } from './gatunek_literacki/gatunek_literacki.mo
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { EgzemplarzModule } from './egzemplarz/egzemplarz.module';
+import { KasjerModule } from './kasjer/kasjer.module';
 
 @Module({
     imports: [
@@ -24,6 +25,8 @@ import { EgzemplarzModule } from './egzemplarz/egzemplarz.module';
         }),
 
         EgzemplarzModule,
+
+        KasjerModule,
     ],
     controllers: [],
     providers: [],
