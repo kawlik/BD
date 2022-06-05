@@ -8,6 +8,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { EgzemplarzModule } from './egzemplarz/egzemplarz.module';
 import { KasjerModule } from './kasjer/kasjer.module';
+import { TransakcjeModule } from './transakcje/transakcje.module';
 
 @Module({
     imports: [
@@ -27,6 +28,8 @@ import { KasjerModule } from './kasjer/kasjer.module';
         EgzemplarzModule,
 
         KasjerModule,
+
+        TransakcjeModule,
     ],
     controllers: [],
     providers: [],
