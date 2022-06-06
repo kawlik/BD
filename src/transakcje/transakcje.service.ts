@@ -39,7 +39,7 @@ export class TransakcjeService {
         const transakcja = this.prismaService.transakcja_sprzedazy.create({
             data: {
                 Cena: cena,
-                Data_transakcji: Date.now().toString(),
+                Data_transakcji: ( new Date()).toISOString(),
                 ID_Egzemplarz: +egzemplarzID,
                 ID_Kasjer: +kasjerID,
             }
