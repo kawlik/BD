@@ -15,7 +15,7 @@ export class TransakcjeService {
         opis: string,
         ISBN: string,
     }) {
-        const egzemplarz = this.prismaService.egzemplarz.create({
+        const egzemplarz = await this.prismaService.egzemplarz.create({
             data: {
                 Data_wydania: dane.data,
                 Cena_sugerowana: dane.cena,
@@ -25,18 +25,18 @@ export class TransakcjeService {
                 ID_Ksiazka: +ksiazkaID,
             }
         });
-        const transakcja = this.prismaService.transakcja_zakupu.create({
+        const transakcja = await this.prismaService.transakcja_zakupu.create({
             data: {
                 Cena: cena,
                 Data_transakcji: Date.now().toString(),
-                ID_Egzemplarz: (await egzemplarz).ID_Egzemplarz,
+                ID_Egzemplarz: egzemplarz.ID_Egzemplarz,
                 ID_Kasjer: +kasjerID,
             }
         })
     }
 
     async sell(cena: number, kasjerID: string, egzemplarzID: string) {
-        const transakcja = this.prismaService.transakcja_sprzedazy.create({
+        const transakcja = await this.prismaService.transakcja_sprzedazy.create({
             data: {
                 Cena: cena,
                 Data_transakcji: ( new Date()).toISOString(),
