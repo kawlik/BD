@@ -9,6 +9,7 @@ import { join } from 'path';
 import { EgzemplarzModule } from './egzemplarz/egzemplarz.module';
 import { KasjerModule } from './kasjer/kasjer.module';
 import { TransakcjeModule } from './transakcje/transakcje.module';
+import { DetailsModule } from './details/details.module';
 
 @Module({
     imports: [
@@ -30,6 +31,8 @@ import { TransakcjeModule } from './transakcje/transakcje.module';
         KasjerModule,
 
         TransakcjeModule,
+
+        DetailsModule,
     ],
     controllers: [],
     providers: [],
