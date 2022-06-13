@@ -1,0 +1,52 @@
+<html>
+<head>
+	<script src="../script.js"></script>
+	<meta charset="utf-8" />
+	<title>Bookstore</title>
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div class="main">
+		<p class="header"><a href="../index.html">Ksiegarnia</a></p>
+		<div class="options">
+			<a class="option" href="secondhand.html">antykwariat</a>
+			<a class="option" href="title.html">tytuły</a>
+			<a class="option" href="autor.html">autorzy</a>
+			<a class="option" href="publish.html">wydawnictwa</a>
+			<a class="option" href="genre.html">gatunki</a>
+		</div>
+	</div>
+
+
+	<p class="h2">Wyszukujesz po: Tytuły </p>
+
+	<div class="pick" id="pickAutor"></div>
+
+	<p style="text-align:center;">
+		<input class="forButt" onclick="changeBack()" type="button" value="⯇">
+		<input class="forButt" onclick="changeFor()" type="button" value="⯈">
+	</p>
+
+	<script>
+
+		var size=8;
+        title(0,size); //base page
+		var n = 0;
+
+		function changeFor() //next page on right button click
+		{
+			n = n + 1;
+            title(n, size);
+		}
+
+		function changeBack() //previos page on left button click
+		{
+			
+			n = n - 1;
+			if (n < 0) { n = 0; }
+            title(n, size);
+        }
+		
+	</script>
+</body>
+</html>

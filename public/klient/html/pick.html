@@ -1,0 +1,64 @@
+<html>
+<head>
+	<meta charset="utf-8" />
+	<script type="text/javascript" src="../script.js"></script>
+	<title>Bookstore</title>
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div class="main">
+		<p class="header"><a href="../index.html">Ksiegarnia</a></p>
+		<div class="options">
+			<a class="option" href="secondhand.html">antykwariat</a>
+			<a class="option" href="title.html">tytuły</a>
+			<a class="option" href="autor.html">autorzy</a>
+			<a class="option" href="publish.html">wydawnictwa</a>
+			<a class="option" href="genre.html">gatunki</a>
+		</div>
+	</div>
+
+
+	<p class="h2"><span id="headSearchPick"></span> <span id="search2Pick"></span></p>
+	<div class="pick" id="pickSearch"></div>
+
+	<div class="error" id="NotFoundPick">
+		<p style="font-weight:bold;">Przykro nam, nic tu nie ma 😔</p>
+		<p style="font-size: 65%; padding-bottom:20px;">Nie znaleziono wyszukanego <span id="errorPick"></span></p>
+		<a class="back" style=" color: rgb(255,255,255); margin-top: 10px;" href="../index.html">Powrót</a>
+	</div>
+
+
+
+
+
+	<script charset="utf-8" type="text/javascript">
+        var wysz = SearchTerm2();  //find genre/author in search bar
+
+		function decodePolish2(word)
+		{
+			var Pol = ["ą", "ć", "ę", "ł", "ń", "ó", "ś", "ź", "ż", "Ą", "Ć", "Ę", "Ł", "Ń", "Ó", "ś", "ź", "ż"];
+			for (var i = 0; i < 9; i++) {
+				var x = new RegExp(encodeURI(Pol[i]), "g");
+				word = word.replace(x, Pol[i]);
+			}
+
+			return word;
+		}
+
+
+
+        if (wysz["gatNameSearch"] != undefined) //if name of search is gatNameSearch (corresponding to genre) 
+		{
+			document.getElementById("headSearchPick").innerHTML = "Wyszukujesz gatunek:";
+			wysz = decodePolish2(wysz["gatNameSearch"]);
+            genPick(wysz);
+		} else {
+			document.getElementById("headSearchPick").innerHTML = "Wyszukujesz autora:";
+			wysz = decodePolish2(wysz["autNameSearch"]);
+			autPick(wysz);
+		}
+
+	</script>
+</body>
+
+</html>

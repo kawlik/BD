@@ -1,0 +1,51 @@
+﻿<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Bookstore</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" charset="utf-8" src="script.js"></script>
+
+    <style>
+        input[type=submit] {
+            background-color: rgb(152,154,255);
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-decoration: none;
+            border-radius: 30px 30px 30px 30px;
+            cursor: pointer;
+            font-size: 100%;
+            font-family: "Bahnshrift",Monospace;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main">
+        <p class="header">Ksiegarnia</p>
+        <div class="options">
+            <a class="option" href="html/secondhand.html">antykwariat</a>
+            <a class="option" href="html/title.html">tytuły</a>
+            <a class="option" href="html/autor.html">autorzy</a>
+            <a class="option" href="html/publish.html">wydawnictwa</a>
+            <a class="option" href="html/genre.html">gatunki</a>
+        </div>
+    </div>
+
+
+    <div class="search">
+        <p class="h2">Powiedz nam czego szukasz: </p>
+        <form action="html/bookpick.html" id="search-book-title" method="GET" enctype="text/plain">
+            <input type="text" class="searchTerm" name="tytNameSearch" id="tytSearch" placeholder="Szukaj po tytule..." />
+        </form>
+        <form action="html/pick.html" id="search-book-genre" method="GET" enctype="text/plain">
+            <input type="text" class="searchTerm" name="gatNameSearch" id="gatSearch" placeholder="Szukaj po gatunku..." />
+        </form>
+        <form action="html/pick.html" id="search-book-autor" method="GET" enctype="text/plain">
+            <input type="text" class="searchTerm" name="autNameSearch" id="autSearch" placeholder="Szukaj po autorze..." />
+        </form>
+    </div>
+
+</body>
+</html>

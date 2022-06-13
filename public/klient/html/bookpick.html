@@ -1,0 +1,73 @@
+<html>
+<head>
+	<link href="../css/style.css" rel="stylesheet" type="text/css">
+	<meta charset="utf-8" />
+	<script src="../script.js"></script>
+	<title>Bookstore</title>
+
+</head>
+<body>
+	<div class="main">
+		<p class="header"><a href="../index.html">Ksiegarnia</a></p>
+		<div class="options">
+			<a class="option" href="secondhand.html">antykwariat</a>
+			<a class="option" href="title.html">tytuły</a>
+			<a class="option" href="autor.html">autorzy</a>
+			<a class="option" href="publish.html">wydawnictwa</a>
+			<a class="option" href="genre.html">gatunki</a>
+		</div>
+	</div>
+
+	<div id="textNoErrorBookPick">
+		<p class="h1" id="headTitleBookPick"></p>
+
+
+
+		<div class="underh1">
+			<p>Autor: <span id="autBookPick"></span></p>
+			<p>Wydawnictwo: <span id="pubBookPick"></span> </p>
+			<p>Rok Wydania: <span id="dateBookPick">-</span></p>
+			<p>Dostępność: <span id="avBookPick">-</span></p>
+			<p>Gatunek: <span id="genreBookPick"></span> </p>
+			<p>Stan: Nowy</p>
+			<p style="color: rgb(255,84,128) ">Cena: <span id="costBookPick">-</span></p>
+		</div>
+
+		<div class="h1"><span id="headTitle2BookPick"></span> oraz inne ksiązki z gatunku <span id="genreBookPick2"></span> znajdziesz: </div>
+
+		<img src="png/Mystery.png" class="image" id="genreImgBookPick">
+	</div>
+
+	<div class="error" id="NotFoundBookPick">
+		<p style="font-weight:bold;">Przykro nam, nic tu nie ma 😔</p>
+		<p style="font-size: 65%; padding-bottom:20px;">Nie znaleziono wyszukanego tytyłu</p>
+		<a class="back" style=" color: rgb(255,255,255); margin-top: 10px;" href="../index.html">Powrót</a>
+	</div>
+
+	<script charset="utf-8" type="text/javascript">
+
+
+		var tytul = SearchTerm("tytNameSearch"); //find title in search bar
+		console.log(tytul);
+
+		function decodePolish(word)//used to decode polish characters (lost in script.js)
+		{
+            var Pol = ["ą", "ć", "ę", "ł", "ń", "ó", "ś", "ź", "ż", "Ą", "Ć", "Ę", "Ł", "Ń", "Ó", "ś", "ź", "ż"];
+            console.log(encodeURI(Pol[4]));
+			for (var i = 0; i < 9; i++) {
+                var x = new RegExp(encodeURI(Pol[i]) , "g");
+                word = word.replace(x, Pol[i]);
+            }
+ 
+            return word;
+		}
+
+		tytul = decodePolish(tytul);
+		console.log(tytul);
+		
+		ksiazka(tytul); 
+        
+	</script>
+</body>
+
+</html>
