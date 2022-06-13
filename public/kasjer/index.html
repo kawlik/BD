@@ -24,7 +24,7 @@
         <p class="header">Zaloguj się</p>
     </div>
 
-    <div class="login">
+    <div class="login" style="margin-top:10%;">
         <p class="h2">Podaj swój identyfikator oraz hasło: </p>
         <form id="loguj_sie" method="get">
             <input type="text" class="loginTerm" id="username" placeholder="Login" />
@@ -38,7 +38,7 @@
 
     <script type="text/javascript">
         document.getElementById('loguj_sie').onsubmit = function () {
-            window.location = window.location.href + "html/menu.html";
+            window.location = new URL("html/menu.html", window.location.href);
             return false;
         }
     </script>

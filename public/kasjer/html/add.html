@@ -1,13 +1,14 @@
 <html>
 <head>
 	<meta charset="utf-8" />
+	<script src="../script.js"></script>
 	<title>Bookstore</title>
 	<link href="../css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
 	<div class="main">
-		<p class="header">Panel sprzedawcy</p>
+		<p class="header"><a href="menu.html">Panel sprzedawcy</a></p>
 		<div class="options">
 			<a class="option" href="list.html">Spis książek</a>
 			<a class="option" href="remove.html">Sprzedaj</a>
@@ -17,13 +18,69 @@
 
 
 	<p class="h2">Tutaj można dodawać egzemplarze do bazy danych, <br> kupować książki używane.</p>
+	<div class="login">
+		<form id="forma" method="get">
 
-
+			<input type="date" class="loginTerm" id="Data transakcji" />
+			<p></p>
+			<input type="number" class="loginTerm" min="1" max="3" step="1" id="idKasjera2" placeholder="ID kasjera" />
+			<p></p>
+			<input type="number" class="loginTerm" min="0.00" max="100000.00" step="0.01" id="Cena" placeholder="Podaj cenę zakupienia" />
+			<p></p>
+			<input type="text" class="loginTerm" id="KsiazkaID" placeholder="Wpisz ID ksiazki" />
+			<p></p>
+			<input type="text" class="loginTerm" id="OcenaStanu" placeholder="Wpisz ocenę stanu egzemplarza" />
+			<p></p>
+			<input type="text" class="loginTerm" id="OpisStanu" placeholder="Wpisz opis stanu egzemplarza" />
+			<p></p>
+			<input type="number" class="loginTerm" min="0.00" max="100000.00" step="0.01" id="Cena2" placeholder="Podaj cenę proponowana sprzedazy" />
+			<p></p>
+			<input type="text" class="loginTerm" id="ISBN" placeholder="Wpisz ISBN" />
+			<p></p>
+			<input type="submit" class="searchButton" value="Zatwierdź transakcję">
+		</form>
+    </div>
 
 	<script>
-
-		
-
+document.getElementById('forma').onsubmit = function () {
+	var stan=document.getElementById('OcenaStanu').value;
+	var ISBN=document.getElementById('ISBN').value;
+	var opis=document.getElementById('OpisStanu').value;
+   if(stan!="nowy"&&stan!="uzywany"){
+	alert("Zła wartość stanu! Wskazówka: egzemplarz powinien być nowy lub używany");
+	return false;
+     }
+    else if(ISBN.length!=13){
+	alert("Zła długość ISBN!");
+	return false;
+   }
+   else if(opis==""){
+	alert("Żle opisany stan!");
+	return false;
+     }
+   else{
+	   var date = new Date(document.getElementById('Data transakcji').value);
+	   console.log(date);
+       alert("Dodano2");
+	fetch('http://localhost:8080/transakcje/buy', {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({
+			cena: +document.getElementById('Cena').value,
+			kasjerID: document.getElementById('idKasjera2').value,
+            ksiazkaID: document.getElementById('KsiazkaID').value,
+			dane:{
+				data:date,
+				cena: +document.getElementById('Cena2').value,
+				stan: document.getElementById('OcenaStanu').value,
+                opis: document.getElementById('OpisStanu').value,
+				ISBN: document.getElementById('ISBN').value
+		}
+		}),
+	   }).then((res) => console.log(res));
+  
+	}
+}
 	</script>
 </body>
 
